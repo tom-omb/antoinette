@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AntHealth : MonoBehaviour
 {
@@ -12,4 +13,15 @@ public class AntHealth : MonoBehaviour
     {
         health++;
     }
+    public void SetHealthToZero()
+    {
+        health = 0;
+        Die();
+    }
+ 
+    private void Die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 }
