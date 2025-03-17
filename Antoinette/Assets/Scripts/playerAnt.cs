@@ -31,7 +31,7 @@ public class playerAnt : MonoBehaviour
 
     // offset= head;circle , size= body;capsule : 
     public Vector2 standingColliderSize = new Vector2(3.71f, 2.27f);  //default capsule SIZE
-    public Vector2 crouchingColliderSize = new Vector2(3.71f, 0.98f); //new size/smaller capsule when crouching
+    public Vector2 crouchingColliderSize = new Vector2(3.71f, 1.98f); //new size/smaller capsule when crouching
     
     public Vector2 standingColliderOffset = new Vector2(0.71f, -0.24f); //default circle POSITION
     public Vector2 crouchingColliderOffset = new Vector2(0.23f, -1.17f); //new offset/lower circle when crouching
@@ -126,7 +126,7 @@ public class playerAnt : MonoBehaviour
         {
             isCrouching = true; // movement/current speed will be changed
             animator.SetBool("IsCrouching", true);
-            bodySize.size = crouchingColliderSize;     // shrink the body's collider Size
+            bodySize.size = crouchingColliderSize;         // shrink the body's collider Size
             headPosition.offset = crouchingColliderOffset; // move head's collider down
         }
         else if (context.canceled)  //button Released
@@ -142,15 +142,15 @@ public class playerAnt : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-     isGrounded();
+        isGrounded();
     }
     
 
     void OnDrawGizmosSelected()
     // help us to know where is the ground will be checked at (feet,obv) by drawing a lil cube 
 {
-    Gizmos.color = Color.white;
-    Gizmos.DrawCube(groundCheckPos.position,groundCheckSize); //groundCheck is an empty obj with a position 
+     Gizmos.color = Color.white;
+     Gizmos.DrawCube(groundCheckPos.position,groundCheckSize); //groundCheck is an empty obj with a position 
 }
 
 }
