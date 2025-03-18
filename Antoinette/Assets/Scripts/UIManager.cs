@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        // Change the sprite based on health value
+         //Change the sprite based on health value
         if (currentHealth == 1)
         {
             healthBarImage.sprite = oneHeartSprite;
