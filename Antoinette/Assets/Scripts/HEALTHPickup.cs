@@ -1,19 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HEALTHPickup : MonoBehaviour
 {
-    [SerializeField]
     private AntHealth antHealth;
-
 
     void Start()
     {
-        antHealth = GameObject.FindWithTag("Player").GetComponent<AntHealth>();
-        if (antHealth == null)
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
         {
-            Debug.LogError("AntHealth Component not found");
+            antHealth = player.GetComponent<AntHealth>();
+
+            if (antHealth == null)
+            {
+                Debug.LogError("⚠️ AntHealth component NOT found on Player!");
+            }
+        }
+        else
+        {
+            Debug.LogError("⚠️ Player with tag 'Player' not found! Check if Antionette has the correct tag.");
         }
     }
 
@@ -21,8 +26,15 @@ public class HEALTHPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            antHealth.HealthGained();
-            Destroy(this.gameObject);
+            if (antHealth != null)
+            {
+                antHealth.HealthGained();
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Debug.LogError("⚠️ AntHealth reference is NULL in HEALTHPickup!");
+            }
         }
     }
 }
