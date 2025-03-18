@@ -3,13 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class AntHealth : MonoBehaviour
 {
+   
     [SerializeField]
     private int health = 3;
-    private UIManager uiManager;
+    private UIManagerA uiManager;
 
     private void Start()
     {
-        uiManager = FindObjectOfType<UIManager>();
+        uiManager = FindObjectOfType<UIManagerA>();
 
         if (uiManager == null)
         {
@@ -17,7 +18,7 @@ public class AntHealth : MonoBehaviour
         }
         else
         {
-            uiManager.UpdateHealthUI(health); // Update UI at start
+            uiManager.UpdateLifes(health); // Update UI at start
         }
     }
 
@@ -26,14 +27,15 @@ public class AntHealth : MonoBehaviour
         if (health < 3) // Max health is 3
         {
             health++;
-            uiManager.UpdateHealthUI(health);
+            uiManager.UpdateLifes(health);
         }
+
     }
 
     public void HealthLost()
     {
         health--;
-        uiManager.UpdateHealthUI(health);
+        uiManager.UpdateLifes(health);
         if (health <= 0)
         {
             Die();
@@ -43,7 +45,7 @@ public class AntHealth : MonoBehaviour
     public void SetHealthToZero()
     {
         health = 0;
-        uiManager.UpdateHealthUI(health);
+        uiManager.UpdateLifes(health);
         Die();
     }
 

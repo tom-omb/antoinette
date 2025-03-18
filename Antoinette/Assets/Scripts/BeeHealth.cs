@@ -13,19 +13,16 @@ public class BeeHealth : MonoBehaviour
     private Rigidbody2D rb;
     private bool isDead = false;
    
-    
-    
-
     private float b_force = 150f;
-    private UIManager _uiManager;
+    private UIManagerB _uiManager;
     
     void Start()
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        _uiManager.UpdateLifes(currentHealth-1);
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManagerB>();
+        _uiManager.UpdateLifes1(currentHealth-1);
     }
 
     public void TakeDamage()
@@ -34,9 +31,9 @@ public class BeeHealth : MonoBehaviour
         if (isDead) return;
         
         currentHealth--;
-        _uiManager.UpdateLifes(currentHealth-1);
+        _uiManager.UpdateLifes1(currentHealth-1);
         animator.SetTrigger("isDamaged");
-
+        
         if (currentHealth == 0)
         {
             Die();
