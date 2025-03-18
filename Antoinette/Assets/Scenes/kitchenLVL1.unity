@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45103306, g: 0.499501, b: 0.5668686, a: 1}
+  m_IndirectSpecularColor: {r: 0.45103335, g: 0.4995011, b: 0.5668687, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1286,7 +1286,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0ca00bb6c241bf34dad2ba99eea315ee, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1826,7 +1826,7 @@ Transform:
   m_GameObject: {fileID: 758367988}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.563, y: 1.65, z: 0.595}
+  m_LocalPosition: {x: 3.563, y: 1.65, z: 0.526}
   m_LocalScale: {x: 0.050975997, y: 0.050975997, z: 0.06372}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2697,6 +2697,7 @@ GameObject:
   - component: {fileID: 1163758534}
   - component: {fileID: 1163758533}
   - component: {fileID: 1163758532}
+  - component: {fileID: 1163758536}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -2787,6 +2788,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1163758536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163758531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7cef3a584fa50541ad7007a960df1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarImage: {fileID: 549346660}
+  oneHeartSprite: {fileID: 21300000, guid: 0ca00bb6c241bf34dad2ba99eea315ee, type: 3}
+  twoHeartsSprite: {fileID: 21300000, guid: 8cad21742f30e7945b4378e2c459d8e4, type: 3}
+  threeHeartsSprite: {fileID: 21300000, guid: d388ef3273c4b8746ac25ad7926b7379, type: 3}
+  LifesCountSprites:
+  - {fileID: 21300000, guid: 0ca00bb6c241bf34dad2ba99eea315ee, type: 3}
+  - {fileID: 21300000, guid: 8cad21742f30e7945b4378e2c459d8e4, type: 3}
+  - {fileID: 21300000, guid: d388ef3273c4b8746ac25ad7926b7379, type: 3}
 --- !u!1001 &1191552309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4028,54 +4049,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bc438b49cb2341f4bbc8f62293da92ab, type: 3}
   m_PrefabInstance: {fileID: 1747540234}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1779898089
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1779898091}
-  - component: {fileID: 1779898090}
-  m_Layer: 0
-  m_Name: UIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1779898090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1779898089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 292adf97d6b95f04baa502b405d62fbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarImage: {fileID: 549346660}
-  oneHeartSprite: {fileID: 21300000, guid: 0ca00bb6c241bf34dad2ba99eea315ee, type: 3}
-  twoHeartsSprite: {fileID: 21300000, guid: 8cad21742f30e7945b4378e2c459d8e4, type: 3}
-  threeHeartsSprite: {fileID: 21300000, guid: d388ef3273c4b8746ac25ad7926b7379, type: 3}
---- !u!4 &1779898091
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1779898089}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1834465853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6184,4 +6157,3 @@ SceneRoots:
   - {fileID: 1856217592}
   - {fileID: 1163758535}
   - {fileID: 225395252}
-  - {fileID: 1779898091}

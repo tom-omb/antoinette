@@ -13,9 +13,6 @@ public class BeeHealth : MonoBehaviour
     private Rigidbody2D rb;
     private bool isDead = false;
    
-    
-    
-
     private float b_force = 150f;
     private UIManagerB _uiManager;
     
@@ -36,7 +33,7 @@ public class BeeHealth : MonoBehaviour
         currentHealth--;
         _uiManager.UpdateLifes1(currentHealth-1);
         animator.SetTrigger("isDamaged");
-
+        
         if (currentHealth == 0)
         {
             Die();
