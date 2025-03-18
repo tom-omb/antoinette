@@ -15,7 +15,7 @@ public class playerAnt : MonoBehaviour
     // Headers are to keep track of all of our public parameters
     [Header("Movement")]
     public float moveSpeed = 1f;
-    float horizontalMovement;
+    public static float horizontalMovement;
     bool isFacingRight = true; //our default
     
 
@@ -66,17 +66,19 @@ public class playerAnt : MonoBehaviour
         isGrounded();
     }
     private void FixedUpdate() //for animation and movement 
-    {    
-    // change the player movement/velocity after the inputs (horizontalMovement (updated in MOVE() ) * current speend (updated in update() depending on weither crouch or not) )
-    rb.velocity = new Vector2(horizontalMovement * currentSpeed, rb.velocity.y); 
-    //to enable the animations based on the new changed values of both : magnitude=X , yVelocity=Y
-    animator.SetFloat("magnitude", Mathf.Abs(rb.velocity.x)); //makes magnitude always positive
-    animator.SetFloat("yVelocity", rb.velocity.y);
-    animator.SetBool("IsCrouching", isCrouching);
+    {   
+        
+        // change the player movement/velocity after the inputs (horizontalMovement (updated in MOVE() ) * current speend (updated in update() depending on weither crouch or not) )
+        rb.velocity = new Vector2(horizontalMovement * currentSpeed, rb.velocity.y); 
+        //to enable the animations based on the new changed values of both : magnitude=X , yVelocity=Y
+        animator.SetFloat("magnitude", Mathf.Abs(rb.velocity.x)); //makes magnitude always positive
+        animator.SetFloat("yVelocity", rb.velocity.y);
+        animator.SetBool("IsCrouching", isCrouching);
     }
 
     void FlipSprite(){ //the name says it all...
-        if ((isFacingRight && horizontalMovement < 0f) || (!isFacingRight && horizontalMovement > 0f)){            isFacingRight = !isFacingRight;
+        if ((isFacingRight && horizontalMovement < 0f) || (!isFacingRight && horizontalMovement > 0f)){            
+            isFacingRight = !isFacingRight;
             Vector3 localScaleTemp = transform.localScale;
             localScaleTemp.x *= -1f; 
             transform.localScale = localScaleTemp; //where the flip is happening
@@ -100,10 +102,13 @@ public class playerAnt : MonoBehaviour
     Functions to assign to the input system of the player
     =====================================================*/
     public void Move(InputAction.CallbackContext context)
-    { 
-        horizontalMovement = context.ReadValue<Vector2>().x; 
-        // reassign any horizantal Movement of the X velocity back in the FixedUpdate() method 
-        //im honestly not sure why not the Update method but i think the fixed one is kinda faster   
+    {
+        if (AutoScrollEvents.EnableInput) //if the auto scroller is on, x movement is disabled
+        {
+            horizontalMovement = context.ReadValue<Vector2>().x;
+            // reassign any horizantal Movement of the X velocity back in the FixedUpdate() method 
+            //im honestly not sure why not the Update method but i think the fixed one is kinda faster   
+        }
     }
     public void Jump(InputAction.CallbackContext context) 
     {
@@ -121,22 +126,24 @@ public class playerAnt : MonoBehaviour
         }
     }
     public void Crouch(InputAction.CallbackContext context)
-    { 
-        if (context.performed)  //button Pressed; Press is performed as an 'interaction'
+    {
+        if (AutoScrollEvents.EnableInput) //crouching messes w the autoscroller so I'm disabling it WHOOPS
         {
-            isCrouching = true; // movement/current speed will be changed
-            animator.SetBool("IsCrouching", true);
-            bodySize.size = crouchingColliderSize;         // shrink the body's collider Size
-            headPosition.offset = crouchingColliderOffset; // move head's collider down
+            if (context.performed)  //button Pressed; Press is performed as an 'interaction'
+            {
+                isCrouching = true; // movement/current speed will be changed
+                animator.SetBool("IsCrouching", true);
+                bodySize.size = crouchingColliderSize;         // shrink the body's collider Size
+                headPosition.offset = crouchingColliderOffset; // move head's collider down
+            }
+            else if (context.canceled)  //button Released
+            {
+                isCrouching = false;
+                animator.SetBool("IsCrouching", false);
+                bodySize.size = standingColliderSize;     //reset the body's collider Size
+                headPosition.offset = standingColliderOffset; //reset the collider's Position
+            }
         }
-        else if (context.canceled)  //button Released
-        {
-            isCrouching = false;
-            animator.SetBool("IsCrouching", false);
-            bodySize.size = standingColliderSize;     //reset the body's collider Size
-            headPosition.offset = standingColliderOffset; //reset the collider's Position
-        }
-
     }
 
 

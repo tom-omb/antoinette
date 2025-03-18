@@ -8,9 +8,19 @@ public class BeetriceWingAttack : MonoBehaviour
     private bool isAttacking = false;
     public Animator animator;
 
+
+
     void Start()
     {
         animator = GetComponent<Animator>();
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            AntHealth playerHealth = collision.GetComponent<AntHealth>();
+            playerHealth.HealthLost();
+        }
     }
 
     public void StartWingAttack()
@@ -38,7 +48,7 @@ public class BeetriceWingAttack : MonoBehaviour
         Vector3 sweepEndPos = transform.position + new Vector3(-sweepDistance, 0, 0);
 
         elapsedTime = 0f;
-        float sweepTime = 2f;
+        float sweepTime = 4f;
         while (elapsedTime < sweepTime)
         {
             transform.position = Vector3.Lerp(transform.position, sweepEndPos, elapsedTime / sweepTime);
@@ -49,5 +59,6 @@ public class BeetriceWingAttack : MonoBehaviour
 
         isAttacking = false;
         animator.SetBool("isAttacking", isAttacking);
+        yield return null;
     }
 }
