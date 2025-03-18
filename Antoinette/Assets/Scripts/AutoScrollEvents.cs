@@ -19,7 +19,7 @@ public class AutoScrollEvents : MonoBehaviour
     // public GameObject Cup_Prefab;
     // public GameObject Spoon_Prefab;
 
-    public static bool EnableInput = false;
+    public static bool EnableInput = true;
     private bool firstpass = false;
     private bool secondpass = false;
     private bool qte_end = false;
@@ -37,6 +37,7 @@ public class AutoScrollEvents : MonoBehaviour
 
     IEnumerator Scrolling()
     {
+        EnableInput = false;
         Bee_rb.velocity = new Vector2(0.5f * LVL_speed, 0);
         playerAnt.horizontalMovement = 0.5f * LVL_speed;
 
@@ -77,10 +78,12 @@ public class AutoScrollEvents : MonoBehaviour
                         {
                             elapsedTime += Time.deltaTime;
                             spike.transform.position = Vector3.Lerp(spike.transform.position, Bee_obj.transform.position, elapsedTime / attackTime);
-                            yield return null; 
+                            yield return null;
 
-                            // -- BEE TAKES DAMAGE -- 
-                        } 
+                            
+                        }
+                        BeeHealth Beehealth = Bee_obj.GetComponent<BeeHealth>();
+                        Beehealth.TakeDamage();
                         Destroy(spike);
                     }
                     else
