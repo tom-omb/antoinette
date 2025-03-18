@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,39 +5,50 @@ public class AntHealth : MonoBehaviour
 {
     [SerializeField]
     private int health = 3;
-    private Animator animator;
+    private UIManager uiManager;
 
-    public void Start()
+    private void Start()
     {
-        animator = GetComponent<Animator>();
+        uiManager = FindObjectOfType<UIManager>();
+
+        if (uiManager == null)
+        {
+            Debug.LogError("⚠️ UIManager not found in the scene!");
+        }
+        else
+        {
+            uiManager.UpdateHealthUI(health); // Update UI at start
+        }
     }
 
     public void HealthGained()
     {
-        health++;
-        if (health > 3)
+        if (health < 3) // Max health is 3
         {
-            health = 3;
-        } // make sure she doesn't exceed max health
+            health++;
+            uiManager.UpdateHealthUI(health);
+        }
     }
 
     public void HealthLost()
     {
         health--;
+        uiManager.UpdateHealthUI(health);
         if (health <= 0)
         {
             Die();
         }
     }
+
     public void SetHealthToZero()
     {
         health = 0;
+        uiManager.UpdateHealthUI(health);
         Die();
     }
- 
+
     private void Die()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
 }
