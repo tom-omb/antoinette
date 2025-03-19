@@ -14,6 +14,7 @@ public class BeetriceWingAttack : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -59,6 +60,6 @@ public class BeetriceWingAttack : MonoBehaviour
 
         isAttacking = false;
         animator.SetBool("isAttacking", isAttacking);
-        yield return null;
+        yield break;
     }
 }

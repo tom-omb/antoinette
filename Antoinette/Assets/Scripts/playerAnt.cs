@@ -7,7 +7,6 @@ public class playerAnt : MonoBehaviour
 {
     public Rigidbody2D rb;
     public Animator animator;
-    public CircleCollider2D headPosition;
     public CapsuleCollider2D bodySize;
     private float currentSpeed;
 
@@ -29,12 +28,11 @@ public class playerAnt : MonoBehaviour
     public float crouchSpeed = 0.5f;
     private bool isCrouching = false; //to calc current speed and enable animation
 
-    // offset= head;circle , size= body;capsule : 
-    public Vector2 standingColliderSize = new Vector2(3.71f, 2.27f);  //default capsule SIZE
-    public Vector2 crouchingColliderSize = new Vector2(3.71f, 1.98f); //new size/smaller capsule when crouching
-    
-    public Vector2 standingColliderOffset = new Vector2(0.71f, -0.24f); //default circle POSITION
-    public Vector2 crouchingColliderOffset = new Vector2(0.23f, -1.17f); //new offset/lower circle when crouching
+    public Vector2 standingColliderSize = new Vector2(3.71f, 2.27f);  // default capsule SIZE
+    public Vector2 standingColliderOffset = new Vector2(-0.58f, -0.93f);  // default capsule OFFSET
+
+    public Vector2 crouchingColliderSize = new Vector2(3.5f, 1.5f); // new size/smaller capsule when crouching
+    public Vector2 crouchingColliderOffset = new Vector2(-0.58f, -1.5f); //new position capsule when crouching
 
 
     [Header("GroundCheck")]
@@ -50,7 +48,6 @@ public class playerAnt : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator =  GetComponent<Animator>();
-        headPosition = GetComponent<CircleCollider2D>();
         bodySize = GetComponent<CapsuleCollider2D>();
     }
 
@@ -87,10 +84,10 @@ public class playerAnt : MonoBehaviour
     private void isGrounded(){ // used to allow jumping only if the player on the ground
     if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0f, groundLayer))
     // our conditions are related to the assigned groundCheck object, to CHECK if it's a ground or not
-    //groundCheckPosition 
-    //groundCheckSize is WHERE her feet are
-    //groundLayer is important to check if the object's Layer is "Ground"
-    //0f is an angle for something im not sure and prob not important
+    // groundCheckPosition 
+    // groundCheckSize is WHERE her feet are
+    // groundLayer is important to check if the object's Layer is "Ground"
+    // 0f is an angle for something im not sure and prob not important
     { 
         //the object is ground, now u r able to jump again
         jumps = jumpNumber;
@@ -134,14 +131,14 @@ public class playerAnt : MonoBehaviour
                 isCrouching = true; // movement/current speed will be changed
                 animator.SetBool("IsCrouching", true);
                 bodySize.size = crouchingColliderSize;         // shrink the body's collider Size
-                headPosition.offset = crouchingColliderOffset; // move head's collider down
+                bodySize.offset = crouchingColliderOffset;
             }
             else if (context.canceled)  //button Released
             {
                 isCrouching = false;
                 animator.SetBool("IsCrouching", false);
                 bodySize.size = standingColliderSize;     //reset the body's collider Size
-                headPosition.offset = standingColliderOffset; //reset the collider's Position
+                bodySize.offset = standingColliderOffset;
             }
         }
     }

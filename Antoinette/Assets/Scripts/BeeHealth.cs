@@ -29,10 +29,10 @@ public class BeeHealth : MonoBehaviour
     {
         
         if (isDead) return;
-        
+
+        StartCoroutine(DamageAnimation());
         currentHealth--;
         _uiManager.UpdateLifes1(currentHealth-1);
-        animator.SetTrigger("isDamaged");
         
         if (currentHealth == 0)
         {
@@ -45,17 +45,22 @@ public class BeeHealth : MonoBehaviour
         isDead = true;
         animator.SetTrigger("isDefeated");
 
-       // GetComponent<BeetriceWingAttack>().enabled = false;
+        // GetComponent<BeetriceWingAttack>().enabled = false;
         StartCoroutine(FallToGround());
 
     }
     IEnumerator FallToGround()
     {
-
-        yield return new WaitForSeconds(1f);
         rb.AddForce(transform.up * -b_force);
-        yield return new WaitForSeconds(2f);
         rb.velocity = Vector2.zero;
-        this.enabled = false;
+        yield break;
+    }
+
+    IEnumerator DamageAnimation()
+    {
+        animator.SetBool("isDamaged", true);
+        yield return new WaitForSeconds(0.5f);
+        animator.SetBool("isDamaged", false);
+        yield break;
     }
 }

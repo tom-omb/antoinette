@@ -56,21 +56,21 @@ public class AutoScrollEvents : MonoBehaviour
             {
                 QTESys.QTEKey = 1; // sets up W input
                 QTESys.waitingForKey = true; // starts QTE
-                yield return new WaitForSeconds(0.7f);  // wait for player's input
+                yield return new WaitForSeconds(0.75f);  // wait for player's input
 
                 firstpass = QTESys.passed; // store result
                 if (firstpass) // only continue to E if W was passed
                 {
                     QTESys.QTEKey = 2; 
                     QTESys.waitingForKey = true;
-                    yield return new WaitForSeconds(0.7f);
+                    yield return new WaitForSeconds(0.75f);
 
                     secondpass = QTESys.passed;
-                    if (secondpass)
+                    if (QTESys.key == null) // this was more consistent w getting second QTE result idk
                     {
                         Bee_rb.velocity = new Vector2(0, 0);
                         playerAnt.horizontalMovement = 0f; // stop moving so that Ant attacks
-                        GameObject spike = Instantiate(Spike_Prefab, new Vector3(cactus.transform.position.x, 1.2f, -1.2f), Quaternion.Euler(0, 0, -58.612f));
+                        GameObject spike = Instantiate(Spike_Prefab, new Vector3(cactus.transform.position.x, 1.2f, -1.2f), Quaternion.Euler(0, 0, -60));
 
                         float elapsedTime = 0f;
                         float attackTime = 1f;
@@ -79,8 +79,6 @@ public class AutoScrollEvents : MonoBehaviour
                             elapsedTime += Time.deltaTime;
                             spike.transform.position = Vector3.Lerp(spike.transform.position, Bee_obj.transform.position, elapsedTime / attackTime);
                             yield return null;
-
-                            
                         }
                         BeeHealth Beehealth = Bee_obj.GetComponent<BeeHealth>();
                         Beehealth.TakeDamage();
@@ -119,7 +117,7 @@ public class AutoScrollEvents : MonoBehaviour
         Bee_animator.SetBool("isAttacking", false);
         Bee_obj.transform.position = new Vector3(Ant_obj.transform.position.x - offset, 1.84f, -1.2f); // return Bee to her place
         Bee_rb.velocity = new Vector2(0.5f * LVL_speed, 0);
-        yield return null;
+        yield break;
     }
 
 

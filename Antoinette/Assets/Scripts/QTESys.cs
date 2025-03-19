@@ -7,7 +7,7 @@ public class QTESys : MonoBehaviour
     public GameObject WKey;
     public GameObject EKey;
     public GameObject SKey;
-    private GameObject key;
+    public static GameObject key;
 
     public static int QTEKey = 4; // set to higher than # of keys so it doesnt accidentally activate
     public static bool passed = false;
@@ -59,6 +59,7 @@ public class QTESys : MonoBehaviour
 
             StartCoroutine(KeyPressing());
             Destroy(key);
+
         }
     }
 
@@ -73,7 +74,7 @@ public class QTESys : MonoBehaviour
         }
         else if (correctKey == 2)
         {
-            Debug.Log("Failed");
+            Debug.Log("Missed");
             passed = false;
         }
 
