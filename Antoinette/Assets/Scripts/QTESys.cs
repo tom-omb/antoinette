@@ -7,12 +7,12 @@ public class QTESys : MonoBehaviour
     public GameObject WKey;
     public GameObject EKey;
     public GameObject SKey;
-    public static GameObject key;
+    public GameObject key;
 
     public static int QTEKey = 4; // set to higher than # of keys so it doesnt accidentally activate
     public static bool passed = false;
     public static bool waitingForKey = false; // "is the QTE ongoing?"
-    private int correctKey = 0;
+    private int correctKey = 2;
 
     public GameObject Ant;
 
@@ -79,7 +79,7 @@ public class QTESys : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1.5f);
-        correctKey = 0;
+        correctKey = 2;
         yield return null;
     }
 }

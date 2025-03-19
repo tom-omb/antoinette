@@ -66,7 +66,7 @@ public class AutoScrollEvents : MonoBehaviour
                     yield return new WaitForSeconds(0.75f);
 
                     secondpass = QTESys.passed;
-                    if (QTESys.key == null) // this was more consistent w getting second QTE result idk
+                    if (secondpass)
                     {
                         Bee_rb.velocity = new Vector2(0, 0);
                         playerAnt.horizontalMovement = 0f; // stop moving so that Ant attacks
@@ -119,6 +119,4 @@ public class AutoScrollEvents : MonoBehaviour
         Bee_rb.velocity = new Vector2(0.5f * LVL_speed, 0);
         yield break;
     }
-
-
 }
