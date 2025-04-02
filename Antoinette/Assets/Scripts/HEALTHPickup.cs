@@ -10,15 +10,6 @@ public class HEALTHPickup : MonoBehaviour
         if (player != null)
         {
             antHealth = player.GetComponent<AntHealth>();
-
-            if (antHealth == null)
-            {
-                Debug.LogError("⚠️ AntHealth component NOT found on Player!");
-            }
-        }
-        else
-        {
-            Debug.LogError("⚠️ Player with tag 'Player' not found! Check if Antionette has the correct tag.");
         }
     }
 
@@ -30,10 +21,6 @@ public class HEALTHPickup : MonoBehaviour
             {
                 antHealth.HealthGained();
                 Destroy(this.gameObject);
-            }
-            else
-            {
-                Debug.LogError("⚠️ AntHealth reference is NULL in HEALTHPickup!");
             }
         }
     }

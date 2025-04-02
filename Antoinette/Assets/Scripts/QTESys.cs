@@ -7,7 +7,7 @@ public class QTESys : MonoBehaviour
     public GameObject WKey;
     public GameObject EKey;
     public GameObject SKey;
-    public GameObject key;
+    private GameObject key;
 
     public static int QTEKey = 4; // set to higher than # of keys so it doesnt accidentally activate
     public static bool passed = false;
@@ -21,6 +21,7 @@ public class QTESys : MonoBehaviour
         if (waitingForKey)
         {
             waitingForKey = false; //prevents looping
+            passed = false;
             Vector3 k_position = new Vector3(Ant.transform.position.x + 0.3f, Ant.transform.position.y + 0.3f, Ant.transform.position.z);
 
             if (QTEKey == 1)
@@ -79,7 +80,7 @@ public class QTESys : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1.5f);
-        correctKey = 2;
+        correctKey = 3;
         yield return null;
     }
 }

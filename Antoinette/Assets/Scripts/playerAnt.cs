@@ -109,17 +109,22 @@ public class playerAnt : MonoBehaviour
     }
     public void Jump(InputAction.CallbackContext context) 
     {
-        if(jumps > 0) //if we are on the ground, ONLY, jump //doesn't allow multiple jumps
+        if (!AutoScrollEvents.disableJump)
         {
-        if(context.performed){ //button is FULLY pressed; interaction is complete
-            rb.velocity = new Vector2(rb.velocity.x ,jumpPower); // change the player's Y velocity to the jumpPower
-            jumps--;            
-            animator.SetTrigger("jump"); // enable animation by checking the jumping condition
-        }
-        if(context.canceled){ //button is NOT Fully pressed "Light tap"; interaction is not complete/interrupted
-            rb.velocity = new Vector2(rb.velocity.x ,rb.velocity.y *0.5f); //divide the Y velocity by half,Not a full jump
-            jumps--;  
-        }
+            if (jumps > 0) //if we are on the ground, ONLY, jump //doesn't allow multiple jumps
+            {
+                if (context.performed)
+                { //button is FULLY pressed; interaction is complete
+                    rb.velocity = new Vector2(rb.velocity.x, jumpPower); // change the player's Y velocity to the jumpPower
+                    jumps--;
+                    animator.SetTrigger("jump"); // enable animation by checking the jumping condition
+                }
+                if (context.canceled)
+                { //button is NOT Fully pressed "Light tap"; interaction is not complete/interrupted
+                    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f); //divide the Y velocity by half,Not a full jump
+                    jumps--;
+                }
+            }
         }
     }
     public void Crouch(InputAction.CallbackContext context)

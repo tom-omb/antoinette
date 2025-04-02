@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class BeeHealth : MonoBehaviour
 {
 
-    public int maxHealth = 3;
+    public int maxHealth = 2;
     [SerializeField]
-    private int currentHealth = 3;
+    private int currentHealth = 2;
     public Animator animator;
     private Rigidbody2D rb;
     private bool isDead = false;
@@ -22,7 +22,7 @@ public class BeeHealth : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManagerB>();
-        _uiManager.UpdateLifes1(currentHealth-1);
+        _uiManager.UpdateLifes1(currentHealth);
     }
 
     public void TakeDamage()
@@ -32,7 +32,7 @@ public class BeeHealth : MonoBehaviour
 
         StartCoroutine(DamageAnimation());
         currentHealth--;
-        _uiManager.UpdateLifes1(currentHealth-1);
+        _uiManager.UpdateLifes1(currentHealth);
         
         if (currentHealth == 0)
         {
@@ -44,8 +44,6 @@ public class BeeHealth : MonoBehaviour
     {
         isDead = true;
         animator.SetTrigger("isDefeated");
-
-        // GetComponent<BeetriceWingAttack>().enabled = false;
         StartCoroutine(FallToGround());
 
     }
@@ -62,5 +60,10 @@ public class BeeHealth : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         animator.SetBool("isDamaged", false);
         yield break;
+    }
+
+    public bool isDefeated()
+    {
+        return isDead;
     }
 }
