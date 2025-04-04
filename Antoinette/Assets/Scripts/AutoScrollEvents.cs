@@ -26,7 +26,7 @@ public class AutoScrollEvents : MonoBehaviour
 
     private bool firstpass = false;
     private bool secondpass = false;
-    private bool levelfail = false;
+    private int attempts = 0;
 
 
     // Start is called before the first frame update
@@ -37,16 +37,6 @@ public class AutoScrollEvents : MonoBehaviour
         offset = Ant_obj.transform.position.x - Bee_obj.transform.position.x;
 
         StartCoroutine(Events());
-    }
-
-    private void Update()
-    {
-        levelfail = Ant_obj.transform.position.x >= 3f && !Bee_obj.GetComponent<BeeHealth>().isDefeated(); // if ant gets to the edge of the table and Bee isn't dead
-        if (levelfail)
-        {
-            levelfail = false;
-            StartCoroutine(LevelFAIL()); // this will stop both characters, make Bee attack without allowing Ant to dodge, and set health to zero.
-        }
     }
 
     IEnumerator Events()
@@ -61,7 +51,7 @@ public class AutoScrollEvents : MonoBehaviour
 
         // ------------------------ CACTUS QUICK-TIME EVENT ------------------------
         GameObject cactus = null;
-        while (!firstpass || !secondpass)
+        while ((!firstpass || !secondpass) && attempts < 2)
         {
             if (cactus == null)
             {
@@ -98,6 +88,7 @@ public class AutoScrollEvents : MonoBehaviour
                         Beehealth.TakeDamage();
                         Destroy(spike);
                         ResetBeePosition();
+                        attempts = 3; // so it exists the loop after u succeed
                     }
                     else
                     {
@@ -108,8 +99,7 @@ public class AutoScrollEvents : MonoBehaviour
 
                         Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                         yield return new WaitForSeconds(1.5f);
-                        ResetBeePosition(); // nesting ienumerators is hard so I will be rewriting these three lines every time whoops
-                        ResetQTE();
+                        QTEFail(); // nesting ienumerators is hard so I will be rewriting these three lines every time whoops
                     }
                 }
                 else
@@ -121,8 +111,7 @@ public class AutoScrollEvents : MonoBehaviour
 
                     Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                     yield return new WaitForSeconds(1.5f);
-                    ResetBeePosition();
-                    ResetQTE();
+                    QTEFail();
                 }
             }
             yield return null;
@@ -138,7 +127,7 @@ public class AutoScrollEvents : MonoBehaviour
         GameObject cup = null;
         GameObject spoon = null;
         ResetQTE();
-        while (!firstpass || !secondpass)
+        while ((!firstpass || !secondpass) && attempts < 2)
         {
             if (cup == null)
             {
@@ -178,6 +167,7 @@ public class AutoScrollEvents : MonoBehaviour
                         Beehealth.TakeDamage();
                         Destroy(spoon);
                         ResetBeePosition();
+                        attempts = 3; 
                     }
                     else
                     {
@@ -185,10 +175,11 @@ public class AutoScrollEvents : MonoBehaviour
                         Ant_obj.GetComponent<AntHealth>().HealthLost();
                         yield return new WaitForSeconds(1f * LVL_speed);
                         Destroy(cup);
+                        Destroy(spoon);
 
                         Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                         yield return new WaitForSeconds(1.5f);
-                        ResetBeePosition();
+                        QTEFail();
                     }
                 }
                 else
@@ -197,10 +188,11 @@ public class AutoScrollEvents : MonoBehaviour
                     Physics2D.IgnoreCollision(cup.GetComponent<Collider2D>(), Ant_obj.GetComponent<Collider2D>());
                     yield return new WaitForSeconds(1f * LVL_speed);
                     Destroy(cup);
+                    Destroy(spoon);
 
                     Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                     yield return new WaitForSeconds(1.5f);
-                    ResetBeePosition();
+                    QTEFail();
                 }
             }
             yield return null;
@@ -208,10 +200,15 @@ public class AutoScrollEvents : MonoBehaviour
 
         if (Bee_obj.GetComponent<BeeHealth>().isDefeated())
         {
+            yield return new WaitForSeconds(0.5f);
             Autoscroll(false);
             EnableInput = true;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(2f);
             Bee_obj.GetComponent<Rigidbody2D>().isKinematic = true;
+        }
+        else if (Ant_obj.transform.position.x >= 3.25f && !Bee_obj.GetComponent<BeeHealth>().isDefeated()) // if ant gets to the edge of the table and Bee isn't dead
+        {
+            StartCoroutine(LevelFAIL()); // this will stop both characters, make Bee attack without allowing Ant to dodge, and set health to zero.
         }
 
     }
@@ -226,7 +223,7 @@ public class AutoScrollEvents : MonoBehaviour
         }
         else
         {
-            Bee_rb.velocity = new Vector2(0, 0);
+            Bee_rb.velocity = Vector2.zero;
             playerAnt.horizontalMovement = 0f; // stop moving so that Ant attacks
         }
     }
@@ -249,15 +246,26 @@ public class AutoScrollEvents : MonoBehaviour
     {
         firstpass = false;
         secondpass = false;
+        attempts = 0;
     }
+
+    private void QTEFail()
+    {
+        ResetBeePosition();
+        ResetQTE();
+        attempts++;
+    }
+
 
     IEnumerator LevelFAIL()
     {
-        disableJump = true;
         Autoscroll(false);
+        disableJump = true;
         Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(1f);
         Ant_obj.GetComponent<AntHealth>().SetHealthToZero();
-        yield break;
+        yield return null;
+        // difference between yield break and yield return null is yb terminates the enumerator while yrn just waits until the next frame to continue indefinitely
+        // I'm using yrn here for a smoother transition to the death panel
     }
 }
