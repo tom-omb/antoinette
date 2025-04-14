@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class playerAnt : MonoBehaviour
 {
     public Rigidbody2D rb;
@@ -161,5 +162,5 @@ public class playerAnt : MonoBehaviour
      Gizmos.color = Color.white;
      Gizmos.DrawCube(groundCheckPos.position,groundCheckSize); //groundCheck is an empty obj with a position 
 }
-
+   
 }
