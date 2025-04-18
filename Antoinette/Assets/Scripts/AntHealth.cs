@@ -5,60 +5,74 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class AntHealth : MonoBehaviour
-{
-   
-    [SerializeField]
-    private int health = 3;
-    private UIManagerA uiManager;
+{ 
+    public int currentHealth = 1;
+    [SerializeField] private int maxHealth = 3;
+    private AntUIManager AntHealthUIManager;
+    [SerializeField] private GameObject DeathUIManager;
+    [SerializeField] private GameObject FailUIManager;
     private Animator animator;
 
     private void Start()
     {
-        uiManager = FindObjectOfType<UIManagerA>();
+        AntHealthUIManager = FindObjectOfType<AntUIManager>();
         animator = GetComponent<Animator>();
 
-        if (uiManager == null)
+        if (AntHealthUIManager == null)
         {
-            Debug.LogError("UIManager not found in the scene");
+            Debug.LogError("Ant Health UIManager not found in the scene");
         }
         else
         {
-            uiManager.UpdateLifes(health); // Update UI at start
+            AntHealthUIManager.UpdateAntLifes(currentHealth); // Update UI at start
         }
     }
 
     public void HealthGained()
     {
-        if (health < 3) // Max health is 3
-        {
-            health++;
-            uiManager.UpdateLifes(health);
+        if(currentHealth != maxHealth){ // Max health is 3
+            currentHealth++;
+            AntHealthUIManager.UpdateAntLifes(currentHealth);
         }
-
+        
     }
 
     public void HealthLost()
     {
         StartCoroutine(DamageAnimation());
-        health--;
-        uiManager.UpdateLifes(health);
-        if (health <= 0)
+        currentHealth--;
+        AntHealthUIManager.UpdateAntLifes(currentHealth);
+        if (currentHealth == 0)
         {
-            Die();
+            SetHealthToZero();
         }
     }
 
     public void SetHealthToZero()
     {
         StartCoroutine(DamageAnimation());
-        health = 0;
-        uiManager.UpdateLifes(health);
+        currentHealth = 0;
+        AntHealthUIManager.UpdateAntLifes(currentHealth);
         Die();
     }
 
     private void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        DeathUIManager.SetActive(true); 
+        DeathUIManager.GetComponent<DeathMenuUI>().PauseGame();
+    }
+
+    public void LevelTwoFailed()
+    {
+        StartCoroutine(DamageAnimation());
+        currentHealth = 0;
+        AntHealthUIManager.UpdateAntLifes(currentHealth);
+        Fail();
+    }
+    private void Fail()
+    {
+        FailUIManager.SetActive(true); 
+        FailUIManager.GetComponent<FailMenuUI>().PauseGame();
     }
 
     IEnumerator DamageAnimation()

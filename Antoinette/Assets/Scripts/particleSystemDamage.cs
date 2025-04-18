@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class particleStstemDamage : MonoBehaviour
 {
 
-    private float damageCooldown = 2f; // collision -> Damage -> one secound -> Damage again
+    private float damageCooldown = 2f; // collision -> Damage -> two secounds -> Damage again
     private bool canTakeDamage = true;
 
     void OnParticleCollision(GameObject other)  //the collision message should be enabled

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManagerA : MonoBehaviour
+public class AntUIManager : MonoBehaviour
 {
 
     //[SerializeField]
@@ -12,6 +12,7 @@ public class UIManagerA : MonoBehaviour
     public Sprite oneHeartSprite;
     public Sprite twoHeartsSprite;
     public Sprite threeHeartsSprite;
+    public Sprite zeroHeartsSprite;
     [SerializeField]
     private Sprite[] LifesCountSprites;
 
@@ -30,8 +31,12 @@ public class UIManagerA : MonoBehaviour
         {
             healthBarImage.sprite = threeHeartsSprite;
         }
+        else if (currentHealth == 0)
+        {
+            healthBarImage.sprite = zeroHeartsSprite;
+        }
     }
-    public void UpdateLifes(int currentHealth)
+    public void UpdateAntLifes(int currentHealth) //was UpdateLifes
     {
         UpdateHealthUI(currentHealth);
     }

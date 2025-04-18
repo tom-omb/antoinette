@@ -263,7 +263,7 @@ public class AutoScrollEvents : MonoBehaviour
         disableJump = true;
         Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
         yield return new WaitForSeconds(1f);
-        Ant_obj.GetComponent<AntHealth>().SetHealthToZero();
+        Ant_obj.GetComponent<AntHealth>().LevelTwoFailed(); //not set to zero but a fail ui
         yield return null;
         // difference between yield break and yield return null is yb terminates the enumerator while yrn just waits until the next frame to continue indefinitely
         // I'm using yrn here for a smoother transition to the death panel

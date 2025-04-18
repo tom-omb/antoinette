@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManagerB : MonoBehaviour
+public class BeeUIManager : MonoBehaviour
 {
     [SerializeField]
     private Image Life;
@@ -11,7 +11,7 @@ public class UIManagerB : MonoBehaviour
     private Sprite[] LifeCountSprites;
 
 
-    public void UpdateLifes1(int currentLives)
+    public void UpdateBeeLifes(int currentLives) //was UpdateLifes1
     {
         Life.sprite = LifeCountSprites[currentLives];
     }

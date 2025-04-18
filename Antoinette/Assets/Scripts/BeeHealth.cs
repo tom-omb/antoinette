@@ -5,22 +5,21 @@ using UnityEngine.UI;
 
 public class BeeHealth : MonoBehaviour
 {
-
+ 
     public int maxHealth = 2;
-    [SerializeField]
-    private int currentHealth = 2;
+    [SerializeField] private int currentHealth = 2;
     public Animator animator;
     private Rigidbody2D rb;
     private bool isDead = false;
-    private UIManagerB _uiManager;
+    private BeeUIManager _uiManager;
     
     void Start()
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManagerB>();
-        _uiManager.UpdateLifes1(currentHealth);
+        _uiManager = GameObject.Find("GamePlayCanvasL2").GetComponent<BeeUIManager>();
+        _uiManager.UpdateBeeLifes(currentHealth);
     }
 
     public void TakeDamage()
@@ -30,7 +29,7 @@ public class BeeHealth : MonoBehaviour
 
         StartCoroutine(DamageAnimation());
         currentHealth--;
-        _uiManager.UpdateLifes1(currentHealth);
+        _uiManager.UpdateBeeLifes(currentHealth);
         
         if (currentHealth == 0)
         { 
