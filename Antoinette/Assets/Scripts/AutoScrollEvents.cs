@@ -28,6 +28,13 @@ public class AutoScrollEvents : MonoBehaviour
     private bool secondpass = false;
     private int attempts = 0;
 
+    audioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<audioManager>();
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -73,7 +80,10 @@ public class AutoScrollEvents : MonoBehaviour
                     if (secondpass)
                     {
                         Autoscroll(false); // stop moving so that Ant attacks
+                         audioManager.playsoundef(audioManager.whoop);
                         GameObject spike = Instantiate(Spike_Prefab, new Vector3(cactus.transform.position.x, 1.2f, -1.2f), Quaternion.Euler(0, 0, -60));
+
+                        
 
                         float elapsedTime = 0f;
                         float attackTime = 1f;
@@ -83,6 +93,7 @@ public class AutoScrollEvents : MonoBehaviour
                             spike.transform.position = Vector3.Lerp(spike.transform.position, Bee_obj.transform.position, elapsedTime / attackTime);
                             yield return null;
                         }
+                        
 
                         BeeHealth Beehealth = Bee_obj.GetComponent<BeeHealth>();
                         Beehealth.TakeDamage();
@@ -151,8 +162,9 @@ public class AutoScrollEvents : MonoBehaviour
 
                     if (secondpass)
                     {
-                        Autoscroll(false); // stop moving so that Ant attacks
 
+                        Autoscroll(false); // stop moving so that Ant attacks
+                         audioManager.playsoundef(audioManager.whoop);
                         float elapsedTime = 0f;
                         float attackTime = 1f;
                         while (elapsedTime < attackTime)
@@ -162,6 +174,7 @@ public class AutoScrollEvents : MonoBehaviour
                             spoon.transform.position = Vector3.Lerp(spoon.transform.position, Bee_obj.transform.position, elapsedTime / attackTime);
                             yield return null;
                         }
+                       
 
                         BeeHealth Beehealth = Bee_obj.GetComponent<BeeHealth>();
                         Beehealth.TakeDamage();
@@ -218,12 +231,12 @@ public class AutoScrollEvents : MonoBehaviour
         if (scroll)
         {
             EnableInput = false;
-            Bee_rb.velocity = new Vector2(0.5f * LVL_speed, 0);
+            Bee_rb.linearVelocity = new Vector2(0.5f * LVL_speed, 0);
             playerAnt.horizontalMovement = 0.5f * LVL_speed;
         }
         else
         {
-            Bee_rb.velocity = Vector2.zero;
+            Bee_rb.linearVelocity = Vector2.zero;
             playerAnt.horizontalMovement = 0f; // stop moving so that Ant attacks
         }
     }

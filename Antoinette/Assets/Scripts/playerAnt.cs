@@ -67,10 +67,10 @@ public class playerAnt : MonoBehaviour
     {   
         
         // change the player movement/velocity after the inputs (horizontalMovement (updated in MOVE() ) * current speend (updated in update() depending on weither crouch or not) )
-        rb.velocity = new Vector2(horizontalMovement * currentSpeed, rb.velocity.y); 
+        rb.linearVelocity = new Vector2(horizontalMovement * currentSpeed, rb.linearVelocity.y); 
         //to enable the animations based on the new changed values of both : magnitude=X , yVelocity=Y
-        animator.SetFloat("magnitude", Mathf.Abs(rb.velocity.x)); //makes magnitude always positive
-        animator.SetFloat("yVelocity", rb.velocity.y);
+        animator.SetFloat("magnitude", Mathf.Abs(rb.linearVelocity.x)); //makes magnitude always positive
+        animator.SetFloat("yVelocity", rb.linearVelocity.y);
         animator.SetBool("IsCrouching", isCrouching);
     }
 
@@ -116,13 +116,13 @@ public class playerAnt : MonoBehaviour
             {
                 if (context.performed)
                 { //button is FULLY pressed; interaction is complete
-                    rb.velocity = new Vector2(rb.velocity.x, jumpPower); // change the player's Y velocity to the jumpPower
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower); // change the player's Y velocity to the jumpPower
                     jumps--;
                     animator.SetTrigger("jump"); // enable animation by checking the jumping condition
                 }
                 if (context.canceled)
                 { //button is NOT Fully pressed "Light tap"; interaction is not complete/interrupted
-                    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f); //divide the Y velocity by half,Not a full jump
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f); //divide the Y velocity by half,Not a full jump
                     jumps--;
                 }
             }
