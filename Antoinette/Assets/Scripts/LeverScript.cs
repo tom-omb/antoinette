@@ -13,6 +13,12 @@ public class LeverScript : MonoBehaviour
     Vector3 upPos;
 
     private bool isTriggered = false;
+    [Header("Audio Clips")]
+    public AudioClip leverDownSound;
+    public AudioClip tickingSound;
+    public AudioClip dingSound;
+    private AudioSource audioSource;
+
 
 
     void Start()
@@ -20,6 +26,13 @@ public class LeverScript : MonoBehaviour
         ant_body = ant_obj.GetComponent<Rigidbody2D>();
         upPos = lever_obj.transform.position;
         downPos = new Vector3(upPos.x, upPos.y - 0.2f, upPos.z);
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            Debug.LogError("Missing AudioSource on " + gameObject.name);
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -37,6 +50,12 @@ public class LeverScript : MonoBehaviour
         // LEVER GOING DOWN
         float elapsedTime = 0f;
         float endTime = 1f;
+
+        if (audioSource != null && leverDownSound != null)
+        {
+            audioSource.PlayOneShot(leverDownSound);
+        }
+
         while (elapsedTime < endTime)
         {
             transform.position = Vector3.Lerp(upPos, downPos, elapsedTime / endTime);
@@ -44,8 +63,23 @@ public class LeverScript : MonoBehaviour
             yield return null;
         }
         transform.position = downPos;
-        yield return new WaitForSeconds(2f); 
+        
         // TODO: add clock sound effect
+        if (audioSource != null && tickingSound != null)
+        {
+            audioSource.clip = tickingSound;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+
+        yield return new WaitForSeconds(2f); 
+
+        if (audioSource != null && audioSource.isPlaying && audioSource.clip == tickingSound)
+        {
+            audioSource.Stop();
+            audioSource.loop = false;
+            audioSource.clip = null; // clean reset
+        }
 
 
         // LEVER GOING UP
@@ -57,6 +91,12 @@ public class LeverScript : MonoBehaviour
         }
         // TODO: add "ding" sound effect
         transform.position = upPos;
+
+        if (audioSource != null && dingSound != null)
+        {
+            audioSource.PlayOneShot(dingSound);
+        }
+
 
         lever_obj.GetComponent<Collider2D>().isTrigger = true; 
         // ^^ makes it so ant can pass through the lever temporarily to avoid collisions stopping ant from going up

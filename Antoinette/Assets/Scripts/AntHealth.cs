@@ -12,11 +12,20 @@ public class AntHealth : MonoBehaviour
     [SerializeField] private GameObject DeathUIManager;
     [SerializeField] private GameObject FailUIManager;
     private Animator animator;
+        [Header("Audio Clips")]
+    public AudioClip damageSound;
+    public AudioClip deathSound;
+    public AudioClip healthGainSound;
+
+    private AudioSource audioSource;
+
+
 
     private void Start()
     {
         AntHealthUIManager = FindObjectOfType<AntUIManager>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         if (AntHealthUIManager == null)
         {
@@ -26,6 +35,12 @@ public class AntHealth : MonoBehaviour
         {
             AntHealthUIManager.UpdateAntLifes(currentHealth); // Update UI at start
         }
+
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource component is missing on this GameObject.");
+        }
+
     }
 
     public void HealthGained()
@@ -34,7 +49,12 @@ public class AntHealth : MonoBehaviour
             currentHealth++;
             AntHealthUIManager.UpdateAntLifes(currentHealth);
         }
-        
+
+        if (audioSource != null && healthGainSound != null)
+            {
+                audioSource.PlayOneShot(healthGainSound);
+            }
+
     }
 
     public void HealthLost()
@@ -42,6 +62,10 @@ public class AntHealth : MonoBehaviour
         StartCoroutine(DamageAnimation());
         currentHealth--;
         AntHealthUIManager.UpdateAntLifes(currentHealth);
+        if (audioSource != null && damageSound != null)
+        {
+            audioSource.PlayOneShot(damageSound);
+        }
         if (currentHealth == 0)
         {
             SetHealthToZero();
@@ -58,6 +82,10 @@ public class AntHealth : MonoBehaviour
 
     private void Die()
     {
+        if (audioSource != null && deathSound != null)
+        {
+            audioSource.PlayOneShot(deathSound);
+        }
         DeathUIManager.SetActive(true); 
         DeathUIManager.GetComponent<DeathMenuUI>().PauseGame();
     }

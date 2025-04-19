@@ -8,5 +8,6 @@ public class StartGame : MonoBehaviour
     public void startGame()
     {
         SceneManager.LoadScene("kitchenLVL1");
+        Time.timeScale = 1f;
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - HitAnt
   - HitBee
   - Bee
+  - Audio
   layers:
   - Default
   - TransparentFX
