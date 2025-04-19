@@ -13,7 +13,6 @@ public class BeeHealth : MonoBehaviour
     private bool isDead = false;
     private BeeUIManager _uiManager;
     
-
     void Start()
     {
         currentHealth = maxHealth;
@@ -25,8 +24,7 @@ public class BeeHealth : MonoBehaviour
 
     public void TakeDamage()
     {
-       
-
+        
         if (isDead) return;
 
         StartCoroutine(DamageAnimation());

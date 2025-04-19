@@ -46,7 +46,7 @@ public class BeetriceWingAttack : MonoBehaviour
         b_RB.AddForce(transform.up * -b_force);
 
         yield return new WaitForSeconds(0.5f);
-        b_RB.linearVelocity = Vector3.zero;
+        b_RB.velocity = Vector3.zero;
 
         Vector3 sweepEndPos = transform.position + new Vector3(-sweepDistance, 0, 0);
 
