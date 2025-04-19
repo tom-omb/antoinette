@@ -28,6 +28,13 @@ public class AutoScrollEvents : MonoBehaviour
     private bool secondpass = false;
     private int attempts = 0;
 
+    audioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<audioManager>();
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +80,7 @@ public class AutoScrollEvents : MonoBehaviour
                     if (secondpass)
                     {
                         Autoscroll(false); // stop moving so that Ant attacks
+                        audioManager.playsoundef(audioManager.whoop);
                         GameObject spike = Instantiate(Spike_Prefab, new Vector3(cactus.transform.position.x, 1.2f, -1.2f), Quaternion.Euler(0, 0, -60));
 
                         float elapsedTime = 0f;
@@ -152,7 +160,7 @@ public class AutoScrollEvents : MonoBehaviour
                     if (secondpass)
                     {
                         Autoscroll(false); // stop moving so that Ant attacks
-
+                        audioManager.playsoundef(audioManager.whoop);
                         float elapsedTime = 0f;
                         float attackTime = 1f;
                         while (elapsedTime < attackTime)
