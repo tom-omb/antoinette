@@ -24,4 +24,16 @@ public class audioManager : MonoBehaviour
     {
         Timedeffect.PlayOneShot(clip);
     }
+
+    public void stopsound()
+    {    
+        music.Stop();    
+        Soundeffect.Stop();
+    }
+
+    public void playsound()
+    {
+        music.Play();
+        Soundeffect.Play();
+    }
 }

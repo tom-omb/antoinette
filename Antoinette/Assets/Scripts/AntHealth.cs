@@ -19,6 +19,12 @@ public class AntHealth : MonoBehaviour
 
     private AudioSource audioSource;
 
+    audioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<audioManager>();
+    }
 
 
     private void Start()
@@ -86,7 +92,8 @@ public class AntHealth : MonoBehaviour
         {
             audioSource.PlayOneShot(deathSound);
         }
-        DeathUIManager.SetActive(true); 
+        DeathUIManager.SetActive(true);
+        audioManager.stopsound();
         DeathUIManager.GetComponent<DeathMenuUI>().PauseGame();
     }
 
