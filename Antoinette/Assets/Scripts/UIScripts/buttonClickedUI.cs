@@ -15,18 +15,19 @@ public class buttonClickedUI : MonoBehaviour,IPointerDownHandler,IPointerUpHandl
 */
     [SerializeField] private Image _img;
     [SerializeField] private Sprite _default ,_hover, _pressed;
-    // [SerializeField] private AudioClip _compressClip ,_uncompressClip; //or just the compress one
-    // [SerializeField] private AudioSource _source;
-
+    [SerializeField] private AudioClip _compressClip;
+     [SerializeField] private AudioSource _source;
+    
 
     
     public void OnPointerDown(PointerEventData eventData){
         _img.sprite = _pressed;
-       // _source.PlayOneShot(_compressClip);
+         _source.PlayOneShot(_compressClip);
+        
     }
     public void OnPointerUp(PointerEventData eventData){
         _img.sprite = _default;
-       // _source.PlayOneShot(_uncompressClip);
+        _source.PlayOneShot(_compressClip);
     }
 
 

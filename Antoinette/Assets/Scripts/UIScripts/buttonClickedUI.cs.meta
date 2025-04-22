@@ -3,7 +3,14 @@ guid: 932387f3b614e7749a5e415491a87fca
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _img: {instanceID: 0}
+  - _default: {instanceID: 0}
+  - _hover: {instanceID: 0}
+  - _pressed: {instanceID: 0}
+  - _compressClip: {fileID: 8300000, guid: e8af9035f5758f44da37af4225a02619, type: 3}
+  - _uncompressClip: {fileID: 8300000, guid: e8af9035f5758f44da37af4225a02619, type: 3}
+  - _source: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
