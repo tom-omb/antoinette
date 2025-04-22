@@ -21,12 +21,16 @@ public class AutoScrollEvents : MonoBehaviour
     public GameObject Cup_Prefab;
     public GameObject Spoon_Prefab;
 
+    public static bool LevelFail = false;
+
+    private GameObject obstacle1;
+    private GameObject obstacle2;
+
     public static bool EnableInput = true; // effects X-axis movement and crouching
     public static bool disableJump = false;
 
     private bool firstpass = false;
     private bool secondpass = false;
-    private int attempts = 0;
 
     audioManager audioManager;
 
@@ -57,15 +61,14 @@ public class AutoScrollEvents : MonoBehaviour
         ResetBeePosition();
 
         // ------------------------ CACTUS QUICK-TIME EVENT ------------------------
-        GameObject cactus = null;
-        while ((!firstpass || !secondpass) && attempts < 2)
+        while ((!firstpass || !secondpass) && !LevelFail)
         {
-            if (cactus == null)
+            if (obstacle1 == null)
             {
-                cactus = Instantiate(Cactus_Prefab, new Vector3(Bee_obj.transform.position.x - offset, 1f, -1.2f), Quaternion.identity);
+                obstacle1 = Instantiate(Cactus_Prefab, new Vector3(Bee_obj.transform.position.x - offset, 1f, -1.2f), Quaternion.identity);
             }
 
-            if (cactus != null && Vector2.Distance(cactus.transform.position, Ant_obj.transform.position) <= 0.75f)
+            if (obstacle1 != null && Vector2.Distance(obstacle1.transform.position, Ant_obj.transform.position) <= 0.75f)
             {
                 StartQTE(1);
                 yield return new WaitForSeconds(0.75f);  // wait for player's input
@@ -81,47 +84,53 @@ public class AutoScrollEvents : MonoBehaviour
                     {
                         Autoscroll(false); // stop moving so that Ant attacks
                         audioManager.playsoundef(audioManager.Soundef2);
-                        GameObject spike = Instantiate(Spike_Prefab, new Vector3(cactus.transform.position.x, 1.2f, -1.2f), Quaternion.Euler(0, 0, -60));
+                        GameObject obstacle2 = Instantiate(Spike_Prefab, new Vector3(obstacle1.transform.position.x, 1.2f, -1.2f), Quaternion.Euler(0, 0, -60));
 
                         float elapsedTime = 0f;
                         float attackTime = 1f;
                         while (elapsedTime < attackTime)
                         {
                             elapsedTime += Time.deltaTime;
-                            spike.transform.position = Vector3.Lerp(spike.transform.position, Bee_obj.transform.position, elapsedTime / attackTime);
+                            obstacle2.transform.position = Vector3.Lerp(obstacle2.transform.position, Bee_obj.transform.position, elapsedTime / attackTime);
                             yield return null;
                         }
 
                         BeeHealth Beehealth = Bee_obj.GetComponent<BeeHealth>();
                         Beehealth.TakeDamage();
-                        Destroy(spike);
+                        Destroy(obstacle2);
                         ResetBeePosition();
-                        attempts = 3; // so it exists the loop after u succeed
+                        yield return new WaitForSeconds(0.75f);
+                        FailCheck();
                     }
                     else
                     {
                         // SECOND KEY MISSED
                         Ant_obj.GetComponent<AntHealth>().HealthLost();
                         yield return new WaitForSeconds(2f * LVL_speed);
-                        Destroy(cactus);
+                        Destroy(obstacle1);
 
                         Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                         yield return new WaitForSeconds(1.5f);
                         QTEFail(); // nesting ienumerators is hard so I will be rewriting these three lines every time whoops
+                        yield return new WaitForSeconds(0.75f);
+                        FailCheck();
                     }
                 }
                 else
                 {
                     // FIRST KEY MISSED
-                    Physics2D.IgnoreCollision(cactus.GetComponent<Collider2D>(), Ant_obj.GetComponent<Collider2D>());
+                    Physics2D.IgnoreCollision(obstacle1.GetComponent<Collider2D>(), Ant_obj.GetComponent<Collider2D>());
                     yield return new WaitForSeconds(1f * LVL_speed);
-                    Destroy(cactus);
+                    Destroy(obstacle1);
 
                     Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                     yield return new WaitForSeconds(1.5f);
                     QTEFail();
+                    yield return new WaitForSeconds(0.75f);
+                    FailCheck();
                 }
             }
+            
             yield return null;
         }
         Autoscroll(true);
@@ -132,20 +141,18 @@ public class AutoScrollEvents : MonoBehaviour
         ResetBeePosition();
 
         // ------------------------ CUP AND SPOON QUICK-TIME EVENT ------------------------
-        GameObject cup = null;
-        GameObject spoon = null;
         ResetQTE();
-        while ((!firstpass || !secondpass) && attempts < 2)
+        while ((!firstpass || !secondpass) && !LevelFail)
         {
-            if (cup == null)
+            if (obstacle1 == null)
             {
-                cup = Instantiate(Cup_Prefab, new Vector3(Bee_obj.transform.position.x - offset, 1f, -1.2f), Quaternion.identity);
+                obstacle1 = Instantiate(Cup_Prefab, new Vector3(Bee_obj.transform.position.x - offset, 1f, -1.2f), Quaternion.identity);
                 Vector2 spoonOffset = new Vector2(0.15f,0.265f);
-                spoon = Instantiate(Spoon_Prefab);
-                spoon.transform.position = new Vector3(cup.transform.position.x + spoonOffset.x, cup.transform.position.y + spoonOffset.y, cup.transform.position.z);
+                obstacle2 = Instantiate(Spoon_Prefab);
+                obstacle2.transform.position = new Vector3(obstacle1.transform.position.x + spoonOffset.x, obstacle1.transform.position.y + spoonOffset.y, obstacle1.transform.position.z);
             }
 
-            if (cup != null && Vector2.Distance(cup.transform.position, Ant_obj.transform.position) <= 0.75f)
+            if (obstacle1 != null && Vector2.Distance(obstacle1.transform.position, Ant_obj.transform.position) <= 0.75f)
             {
                 StartQTE(1);
                 yield return new WaitForSeconds(0.75f);  // wait for player's input
@@ -166,57 +173,59 @@ public class AutoScrollEvents : MonoBehaviour
                         while (elapsedTime < attackTime)
                         {
                             elapsedTime += Time.deltaTime;
-                            spoon.transform.Rotate(10f, 0.0f, 0.0f, Space.Self);
-                            spoon.transform.position = Vector3.Lerp(spoon.transform.position, Bee_obj.transform.position, elapsedTime / attackTime);
+                            obstacle2.transform.Rotate(10f, 0.0f, 0.0f, Space.Self);
+                            obstacle2.transform.position = Vector3.Lerp(obstacle2.transform.position, Bee_obj.transform.position, elapsedTime / attackTime);
                             yield return null;
                         }
 
                         BeeHealth Beehealth = Bee_obj.GetComponent<BeeHealth>();
                         Beehealth.TakeDamage();
-                        Destroy(spoon);
+                        Destroy(obstacle2);
                         ResetBeePosition();
-                        attempts = 3; 
+                        yield return new WaitForSeconds(0.75f);
+                        FailCheck();
                     }
                     else
                     {
                         // SECOND KEY MISSED
                         Ant_obj.GetComponent<AntHealth>().HealthLost();
                         yield return new WaitForSeconds(1f * LVL_speed);
-                        Destroy(cup);
-                        Destroy(spoon);
+                        Destroy(obstacle1);
+                        Destroy(obstacle2);
 
                         Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                         yield return new WaitForSeconds(1.5f);
                         QTEFail();
+                        yield return new WaitForSeconds(0.75f);
+                        FailCheck();
                     }
                 }
                 else
                 {
                     // FIRST KEY MISSED
-                    Physics2D.IgnoreCollision(cup.GetComponent<Collider2D>(), Ant_obj.GetComponent<Collider2D>());
+                    Physics2D.IgnoreCollision(obstacle1.GetComponent<Collider2D>(), Ant_obj.GetComponent<Collider2D>());
                     yield return new WaitForSeconds(1f * LVL_speed);
-                    Destroy(cup);
-                    Destroy(spoon);
+                    Destroy(obstacle1);
+                    Destroy(obstacle2);
 
                     Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                     yield return new WaitForSeconds(1.5f);
                     QTEFail();
+                    yield return new WaitForSeconds(0.75f);
+                    FailCheck();
                 }
             }
             yield return null;
         }
 
+        FailCheck();
         if (Bee_obj.GetComponent<BeeHealth>().isDefeated())
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
             Autoscroll(false);
             EnableInput = true;
             yield return new WaitForSeconds(2f);
             Bee_obj.GetComponent<Rigidbody2D>().isKinematic = true;
-        }
-        else if (Ant_obj.transform.position.x >= 3.25f && !Bee_obj.GetComponent<BeeHealth>().isDefeated()) // if ant gets to the edge of the table and Bee isn't dead
-        {
-            StartCoroutine(LevelFAIL()); // this will stop both characters, make Bee attack without allowing Ant to dodge, and set health to zero.
         }
 
     }
@@ -239,8 +248,7 @@ public class AutoScrollEvents : MonoBehaviour
     private void ResetBeePosition()
     {
         Vector3 BeePos = new Vector3(Ant_obj.transform.position.x - offset, 1.84f, -1.2f);
-        Bee_obj.transform.position = BeePos;
-        // re-orient bee in case one character moved too much
+        Bee_obj.transform.position = BeePos; // re-orient bee in case one character moved too much
         Autoscroll(true);
     }
 
@@ -254,26 +262,41 @@ public class AutoScrollEvents : MonoBehaviour
     {
         firstpass = false;
         secondpass = false;
-        attempts = 0;
+        obstacle1 = null;
+        obstacle1 = null;
     }
 
     private void QTEFail()
     {
         ResetBeePosition();
         ResetQTE();
-        attempts++;
+    }
+
+    private void FailCheck()
+    {
+        if (LevelFail)
+        {
+            LevelFail = false;
+            FAIL();
+        }
     }
 
 
-    IEnumerator LevelFAIL()
+    public void FAIL()
     {
+        StopAllCoroutines();
+
+        if(obstacle1 != null)
+        {
+            Destroy(obstacle1);
+        }
+        if (obstacle2 != null)
+        {
+            Destroy(obstacle2);
+        }
+
         Autoscroll(false);
         disableJump = true;
-        Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
-        yield return new WaitForSeconds(1f);
         Ant_obj.GetComponent<AntHealth>().LevelTwoFailed(); //not set to zero but a fail ui
-        yield return null;
-        // difference between yield break and yield return null is yb terminates the enumerator while yrn just waits until the next frame to continue indefinitely
-        // I'm using yrn here for a smoother transition to the death panel
     }
 }
