@@ -6,17 +6,21 @@ public class audioManager : MonoBehaviour
     [SerializeField] AudioSource music;
     [SerializeField] AudioSource Soundeffect;
     [SerializeField] AudioSource Timedeffect;
+    
 
     [Header("Audio Clips:")]
     public AudioClip Background;
-    public AudioClip Buzz;
-    public AudioClip whoop;
+    public AudioClip Soundef1;
+    public AudioClip Soundef2;
+    
+
+
 
     private void Start()
     {
         music.clip = Background;
         music.Play();
-        Soundeffect.clip = Buzz;
+        Soundeffect.clip = Soundef1;
         Soundeffect.Play();
     }
 

@@ -5375,7 +5375,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.465
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7321,9 +7321,11 @@ MonoBehaviour:
   music: {fileID: 1450707555}
   Soundeffect: {fileID: 974486424}
   Timedeffect: {fileID: 952649546}
+  Timedeffect2: {fileID: 0}
   Background: {fileID: 8300000, guid: d4a05f7a77b412e4ea78d0fb4d866cd7, type: 3}
-  Buzz: {fileID: 8300000, guid: 30fa4fc665b4ff04c8fa189d6384763e, type: 3}
-  whoop: {fileID: 8300000, guid: 6b457c8b2d568ef4489678fa489ecbaa, type: 3}
+  Soundef1: {fileID: 8300000, guid: 30fa4fc665b4ff04c8fa189d6384763e, type: 3}
+  Soundef2: {fileID: 8300000, guid: 6b457c8b2d568ef4489678fa489ecbaa, type: 3}
+  Soundef3: {fileID: 0}
 --- !u!82 &1109205042
 AudioSource:
   m_ObjectHideFlags: 0
