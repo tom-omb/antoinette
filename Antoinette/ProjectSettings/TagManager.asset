@@ -5,10 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - HitAnt
-  - HitBee
   - Bee
   - Audio
+  - HitAnt
   layers:
   - Default
   - TransparentFX

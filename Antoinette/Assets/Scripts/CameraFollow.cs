@@ -4,6 +4,7 @@ public class CameraFollow : MonoBehaviour
 {
 
     Vector3 offset;
+    Vector3 cameraPos;
     //We need the camera to be a constant distance away from the player
     //So this offset will have the value of (player position-camera position)
 
@@ -18,6 +19,8 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position - offset; 
+        cameraPos = player.transform.position - offset;
+        transform.position = cameraPos;
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, 0, 4.77f), transform.position.z);
     }
 }

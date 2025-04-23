@@ -45,7 +45,7 @@ public class AutoScrollEvents : MonoBehaviour
     {
         Bee_animator = Bee_obj.GetComponent<Animator>();
         Bee_rb = Bee_obj.GetComponent<Rigidbody2D>();
-        offset = Ant_obj.transform.position.x - Bee_obj.transform.position.x;
+        offset = -1.5f;
 
         StartCoroutine(Events());
     }
@@ -100,7 +100,6 @@ public class AutoScrollEvents : MonoBehaviour
                         Destroy(obstacle2);
                         ResetBeePosition();
                         yield return new WaitForSeconds(0.75f);
-                        FailCheck();
                     }
                     else
                     {
@@ -183,7 +182,6 @@ public class AutoScrollEvents : MonoBehaviour
                         Destroy(obstacle2);
                         ResetBeePosition();
                         yield return new WaitForSeconds(0.75f);
-                        FailCheck();
                     }
                     else
                     {
@@ -235,6 +233,7 @@ public class AutoScrollEvents : MonoBehaviour
         if (scroll)
         {
             EnableInput = false;
+            disableJump = false;
             Bee_rb.velocity = new Vector2(0.5f * LVL_speed, 0);
             playerAnt.horizontalMovement = 0.5f * LVL_speed;
         }
@@ -274,7 +273,7 @@ public class AutoScrollEvents : MonoBehaviour
 
     private void FailCheck()
     {
-        if (LevelFail)
+        if (LevelFail && !Bee_obj.GetComponent<BeeHealth>().isDefeated())
         {
             LevelFail = false;
             FAIL();

@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/livingRoomLVL2.unity
     guid: 6f99529cf13d4eb478994b7671ef653d
+  - enabled: 1
+    path: Assets/Scenes/cutscenes.unity
+    guid: 737971590fe38ea4c86f33f83b76c280
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f69359c30f64e3749993badd64c711d1, type: 2}

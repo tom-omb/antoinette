@@ -35,6 +35,11 @@ public class audioManager : MonoBehaviour
         Soundeffect.Stop();
     }
 
+    public void stopSoundEffect()
+    {
+        Soundeffect.Pause();
+    }
+
     public void playsound()
     {
         music.Play();

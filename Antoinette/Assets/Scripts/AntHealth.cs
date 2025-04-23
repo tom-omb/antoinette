@@ -46,7 +46,6 @@ public class AntHealth : MonoBehaviour
         {
             Debug.LogError("AudioSource component is missing on this GameObject.");
         }
-
     }
 
     public void HealthGained()

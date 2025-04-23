@@ -70,12 +70,10 @@ public class QTESys : MonoBehaviour
 
         if (correctKey == 1)
         {
-            Debug.Log("Passed");
             passed = true;
         }
         else if (correctKey == 2)
         {
-            Debug.Log("Missed");
             passed = false;
         }
 

@@ -16,7 +16,7 @@ public class buttonClickedUI : MonoBehaviour,IPointerDownHandler,IPointerUpHandl
     [SerializeField] private Image _img;
     [SerializeField] private Sprite _default ,_hover, _pressed;
     [SerializeField] private AudioClip _compressClip;
-     [SerializeField] private AudioSource _source;
+    [SerializeField] private AudioSource _source;
     
 
     
