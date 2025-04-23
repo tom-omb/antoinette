@@ -21,13 +21,16 @@ public class buttonClickedUI : MonoBehaviour,IPointerDownHandler,IPointerUpHandl
 
     
     public void OnPointerDown(PointerEventData eventData){
-        _img.sprite = _pressed;
-         _source.PlayOneShot(_compressClip);
-        
+        if (_img != null && _source != null){
+            _img.sprite = _pressed;
+            _source.PlayOneShot(_compressClip);
+        }
     }
     public void OnPointerUp(PointerEventData eventData){
-        _img.sprite = _default;
-        _source.PlayOneShot(_compressClip);
+        if (_img != null && _source != null){
+            _img.sprite = _default;
+            _source.PlayOneShot(_compressClip);
+        }
     }
 
 
@@ -35,13 +38,17 @@ public class buttonClickedUI : MonoBehaviour,IPointerDownHandler,IPointerUpHandl
     //Detect if the Cursor starts to pass over the GameObject
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        _img.sprite = _hover;
+        if (_img != null){
+            _img.sprite = _hover;
+        }
     }
 
     //Detect when Cursor leaves the GameObject
     public void OnPointerExit(PointerEventData pointerEventData)
     {
-        _img.sprite = _default;
+        if (_img != null){
+            _img.sprite = _default;
+        }
     }
 
 }

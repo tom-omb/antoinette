@@ -12,7 +12,14 @@ public class BeeHealth : MonoBehaviour
     private Rigidbody2D rb;
     private bool isDead = false;
     private BeeUIManager _uiManager;
+
+    audioManager audioManager;
     
+private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<audioManager>();
+    }
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -39,6 +46,7 @@ public class BeeHealth : MonoBehaviour
 
     public void Die()
     {
+        audioManager.stopBuzzing(audioManager.Soundef1);
         isDead = true;
         animator.SetTrigger("isDefeated");
         float b_force = 200f;

@@ -1256,10 +1256,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932387f3b614e7749a5e415491a87fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _img: {fileID: 0}
-  _default: {fileID: 0}
-  _hover: {fileID: 0}
-  _pressed: {fileID: 0}
+  _img: {fileID: 174565010}
+  _default: {fileID: 21300000, guid: 1b03175337958ea4d97432b814b11608, type: 3}
+  _hover: {fileID: 21300000, guid: 1b03175337958ea4d97432b814b11608, type: 3}
+  _pressed: {fileID: 21300000, guid: 1b03175337958ea4d97432b814b11608, type: 3}
   _compressClip: {fileID: 8300000, guid: e8af9035f5758f44da37af4225a02619, type: 3}
   _source: {fileID: 174565013}
 --- !u!1 &185699554
@@ -1741,6 +1741,7 @@ GameObject:
   - component: {fileID: 293979490}
   - component: {fileID: 293979489}
   - component: {fileID: 293979492}
+  - component: {fileID: 293979493}
   m_Layer: 0
   m_Name: StoveFire_PS
   m_TagString: HitAnt
@@ -6617,6 +6618,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3dcf7e5feb4a1f4395caa76745fb455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &293979493
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293979488}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 96e09869feefda84f884dca663fd21ad, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 3
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &348504411
 GameObject:
   m_ObjectHideFlags: 0
@@ -9403,7 +9500,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.321
   m_Pitch: 1
   Loop: 0
   Mute: 0

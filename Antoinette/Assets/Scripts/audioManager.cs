@@ -45,4 +45,9 @@ public class audioManager : MonoBehaviour
         music.Play();
         Soundeffect.Play();
     }
+
+    public void stopBuzzing(AudioClip Clip)
+    {
+        Soundeffect.Stop();
+    }
 }
