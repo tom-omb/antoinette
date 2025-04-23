@@ -6630,7 +6630,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 96e09869feefda84f884dca663fd21ad, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -9500,7 +9500,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.321
+  m_Volume: 0.175
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -17905,7 +17905,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -18019,9 +18019,11 @@ MonoBehaviour:
   music: {fileID: 2110162246}
   Soundeffect: {fileID: 532982746}
   Timedeffect: {fileID: 532982746}
+  DialogueEffect: {fileID: 532982746}
   Background: {fileID: 8300000, guid: 553109508f5ff164e8087af48c016cf7, type: 3}
   Soundef1: {fileID: 8300000, guid: 3c1829a18e9b7364ca35c76f62cec86a, type: 3}
   Soundef2: {fileID: 8300000, guid: 3c1829a18e9b7364ca35c76f62cec86a, type: 3}
+  Soundef3: {fileID: 8300000, guid: 3c1829a18e9b7364ca35c76f62cec86a, type: 3}
 --- !u!1001 &2073932115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18302,9 +18304,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 553109508f5ff164e8087af48c016cf7, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.523
+  m_Volume: 0.175
   m_Pitch: 0.9
   Loop: 0
   Mute: 0
