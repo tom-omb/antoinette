@@ -12,7 +12,7 @@ public class CutsceneLoopPoint : MonoBehaviour
     void Start()
     {
         vp = GetComponent<VideoPlayer>();
-        vp.isLooping = true;
+        vp.isLooping = false;
         vp.loopPointReached += OnLoopPointReached;
         vp.Play();
 
@@ -22,7 +22,7 @@ public class CutsceneLoopPoint : MonoBehaviour
 
     void OnLoopPointReached(VideoPlayer vp)
     {
-        vp.Pause();
+        vp.playbackSpeed = vp.playbackSpeed / 10f;
         StartCoroutine(Next());
     }
 
