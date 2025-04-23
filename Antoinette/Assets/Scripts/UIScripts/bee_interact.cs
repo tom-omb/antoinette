@@ -26,6 +26,12 @@ public class bee_interact : MonoBehaviour
     private bool AntTalking;
 
     public float wordSpeed;
+    audioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<audioManager>();
+    }
 
     void Start()
     {
@@ -94,11 +100,13 @@ public class bee_interact : MonoBehaviour
     IEnumerator Typing()
     {
         switchSprites();
+        audioManager.startTyping(audioManager.Soundef3);
         foreach (char letter in dialogue[index].ToCharArray())
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(wordSpeed);
         }
+        audioManager.stopTyping(audioManager.Soundef3);
     }
 
     public void NextLine()

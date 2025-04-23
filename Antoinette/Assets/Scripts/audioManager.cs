@@ -6,13 +6,15 @@ public class audioManager : MonoBehaviour
     [SerializeField] AudioSource music;
     [SerializeField] AudioSource Soundeffect;
     [SerializeField] AudioSource Timedeffect;
-    
+    [SerializeField] AudioSource DialogueEffect;
+
 
     [Header("Audio Clips:")]
     public AudioClip Background;
     public AudioClip Soundef1;
     public AudioClip Soundef2;
-    
+    public AudioClip Soundef3;
+
 
 
 
@@ -49,5 +51,15 @@ public class audioManager : MonoBehaviour
     public void stopBuzzing(AudioClip Clip)
     {
         Soundeffect.Stop();
+    }
+
+    public void stopTyping(AudioClip Clip)
+    {
+        DialogueEffect.Stop();
+    }
+
+    public void startTyping(AudioClip Clip)
+    {
+        DialogueEffect.Play();
     }
 }

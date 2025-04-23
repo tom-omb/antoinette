@@ -43,6 +43,11 @@ public class LeverScript : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        isTriggered = false;
+    }
+
     IEnumerator LeverDown()
     {
         yield return new WaitForSeconds(0.1f); // makes it look smoother idk
@@ -98,9 +103,12 @@ public class LeverScript : MonoBehaviour
         }
 
 
-        lever_obj.GetComponent<Collider2D>().isTrigger = true; 
+        lever_obj.GetComponent<Collider2D>().isTrigger = true;
         // ^^ makes it so ant can pass through the lever temporarily to avoid collisions stopping ant from going up
-        ant_body.AddForce(transform.up * 400f); // lauches antoinette UP
+        if (isTriggered)
+        {
+            ant_body.AddForce(transform.up * 400f); // lauches antoinette UP
+        }
 
         yield return new WaitForSeconds(0.5f);
         lever_obj.GetComponent<Collider2D>().isTrigger = false;
