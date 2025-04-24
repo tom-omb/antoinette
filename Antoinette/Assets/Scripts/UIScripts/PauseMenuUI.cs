@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,9 +64,4 @@ public class PauseMenu : MonoBehaviour
         pauseBoxUI.SetActive(true);
         InstructionsPanelUI.SetActive(false);
     }
-
-    public void ExitGamePressed(){
-        Application.Quit();
-    }
-    
 }
