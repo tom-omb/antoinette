@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Drawing;
-using System.Runtime.CompilerServices;
-using TMPro;
 using UnityEngine;
 
 
@@ -13,8 +10,6 @@ public class AutoScrollEvents : MonoBehaviour
     private Rigidbody2D Bee_rb;
 
     private float offset;
-
-    private Animator Bee_animator;
 
     public GameObject Cactus_Prefab;
     public GameObject Spike_Prefab;
@@ -43,7 +38,6 @@ public class AutoScrollEvents : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Bee_animator = Bee_obj.GetComponent<Animator>();
         Bee_rb = Bee_obj.GetComponent<Rigidbody2D>();
         offset = -1.5f;
 
@@ -61,6 +55,7 @@ public class AutoScrollEvents : MonoBehaviour
         ResetBeePosition();
 
         // ------------------------ CACTUS QUICK-TIME EVENT ------------------------
+        ResetQTE();
         while ((!firstpass || !secondpass) && !LevelFail)
         {
             if (obstacle1 == null)
@@ -108,11 +103,11 @@ public class AutoScrollEvents : MonoBehaviour
                         yield return new WaitForSeconds(2f * LVL_speed);
                         Destroy(obstacle1);
 
+                        FailCheck();
                         Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                         yield return new WaitForSeconds(1.5f);
                         QTEFail(); // nesting ienumerators is hard so I will be rewriting these three lines every time whoops
                         yield return new WaitForSeconds(0.75f);
-                        FailCheck();
                     }
                 }
                 else
@@ -122,11 +117,11 @@ public class AutoScrollEvents : MonoBehaviour
                     yield return new WaitForSeconds(1f * LVL_speed);
                     Destroy(obstacle1);
 
+                    FailCheck();
                     Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                     yield return new WaitForSeconds(1.5f);
                     QTEFail();
                     yield return new WaitForSeconds(0.75f);
-                    FailCheck();
                 }
             }
             
@@ -135,6 +130,7 @@ public class AutoScrollEvents : MonoBehaviour
         Autoscroll(true);
 
         yield return new WaitForSeconds(1f * LVL_speed);
+        FailCheck();
         Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
         yield return new WaitForSeconds(1.5f);
         ResetBeePosition();
@@ -191,11 +187,11 @@ public class AutoScrollEvents : MonoBehaviour
                         Destroy(obstacle1);
                         Destroy(obstacle2);
 
+                        FailCheck();
                         Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                         yield return new WaitForSeconds(1.5f);
                         QTEFail();
                         yield return new WaitForSeconds(0.75f);
-                        FailCheck();
                     }
                 }
                 else
@@ -206,11 +202,11 @@ public class AutoScrollEvents : MonoBehaviour
                     Destroy(obstacle1);
                     Destroy(obstacle2);
 
+                    FailCheck();
                     Bee_obj.GetComponent<BeetriceWingAttack>().StartWingAttack();
                     yield return new WaitForSeconds(1.5f);
                     QTEFail();
                     yield return new WaitForSeconds(0.75f);
-                    FailCheck();
                 }
             }
             yield return null;
@@ -263,6 +259,7 @@ public class AutoScrollEvents : MonoBehaviour
         secondpass = false;
         obstacle1 = null;
         obstacle1 = null;
+        LevelFail = false;
     }
 
     private void QTEFail()
